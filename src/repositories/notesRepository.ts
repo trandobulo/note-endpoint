@@ -1,6 +1,7 @@
-"use strict";
+import { INoteObj, INotesRepository, ISummary, IEditNoteObj } from "./types";
 
-class NoteList {
+class NotesRepository implements INotesRepository {
+  notes: INoteObj[];
   constructor() {
     this.notes = [
       {
@@ -57,20 +58,13 @@ class NoteList {
         id: "6",
         active: true,
       },
-      {
-        category: "random thought",
-        created: "september 22, 2022",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        id: "7",
-        active: true,
-      },
     ];
   }
 
-  addNote(category, content) {
-    const date = new Date();
+  addNote(category: string, content: string) {
+    const date: Date = new Date();
 
-    const monthNames = [
+    const monthNames: string[] = [
       "january",
       "february",
       "march",
@@ -85,19 +79,19 @@ class NoteList {
       "december",
     ];
 
-    const noteObj = {
-      category: category,
+    const noteObj: INoteObj = {
+      category,
       created: `${
         monthNames[date.getMonth()]
       } ${date.getDate()}, ${date.getFullYear()}`,
-      content: content,
+      content,
       id: `${Math.round(Math.random() * 100000)}`,
       active: true,
     };
     this.notes.push(noteObj);
   }
 
-  getNoteIndex(id) {
+  getNoteIndex(id: string) {
     const noteId = this.notes.findIndex((note) => note.id === id);
     if (noteId >= 0) {
       return noteId;
@@ -106,7 +100,7 @@ class NoteList {
     }
   }
 
-  getNote(id) {
+  getNote(id: string) {
     const note = this.notes.find((note) => note.id === id);
     if (note) {
       return note;
@@ -115,7 +109,7 @@ class NoteList {
     }
   }
 
-  deleteNote(id) {
+  deleteNote(id: string) {
     try {
       this.getNoteIndex(id);
       this.notes.splice(this.getNoteIndex(id), 1);
@@ -124,7 +118,7 @@ class NoteList {
     }
   }
 
-  editNote(id, { category, content }) {
+  editNote(id: string, { category, content }: IEditNoteObj) {
     this.notes[this.getNoteIndex(id)] = {
       ...this.notes[this.getNoteIndex(id)],
       category,
@@ -134,7 +128,7 @@ class NoteList {
 
   getTotalActiveArchiveNotes() {
     return this.notes.reduce(
-      function (total, note) {
+      function (total: ISummary, note: INoteObj) {
         if (note.active) {
           total.active++;
           return total;
@@ -148,6 +142,6 @@ class NoteList {
   }
 }
 
-const noteList = new NoteList();
+const notesRepository = new NotesRepository();
 
-module.exports = noteList;
+export default notesRepository;

@@ -4,9 +4,12 @@
  * Module dependencies.
  */
 
-var app = require("../src/app");
-var debug = require("debug")("note-endpoint:server");
-var http = require("http");
+import app from "../src/app";
+import debug from "debug";
+
+debug("note-endpoint:server");
+
+import http from "http";
 
 /**
  * Get port from environment and store in Express.
@@ -33,7 +36,7 @@ server.on("listening", onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val: string) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -53,7 +56,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error: any) {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -81,6 +84,13 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
+  var bind =
+    typeof addr === "string"
+      ? "pipe " + addr
+      : addr !== null
+      ? "port " + addr.port
+      : null;
+  if (bind) {
+    debug("Listening on " + bind);
+  }
 }
