@@ -1,6 +1,5 @@
 import express, { Router, Request, Response } from "express";
 import notesServices from "../services/notesServices";
-import notesRepository from "../repositories/notesRepository";
 
 const router: Router = express.Router();
 
@@ -57,7 +56,7 @@ router
         note: notesServices.getNote(id),
       });
     } catch (err: any) {
-      res.status(500).json({ error: "Input data isn't correct" });
+      res.status(500).json({ error: err.message });
     }
   })
 

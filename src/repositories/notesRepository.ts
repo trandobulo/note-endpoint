@@ -123,8 +123,10 @@ class NotesRepository implements INotesRepository {
   editNote(id: string, { category, content }: IEditNoteObj) {
     this.notes[this.getNoteIndex(id)] = {
       ...this.notes[this.getNoteIndex(id)],
-      category,
-      content,
+      category: category
+        ? category
+        : this.notes[this.getNoteIndex(id)].category,
+      content: content ? content : this.notes[this.getNoteIndex(id)].content,
     };
   }
 

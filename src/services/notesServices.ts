@@ -21,6 +21,16 @@ class NotesServices implements INotesServices {
       .noUnknown(),
   });
 
+  editNoteSchema: BaseSchema = yup.object({
+    body: yup
+      .object({
+        category: yup.string().min(1),
+        content: yup.string().min(3),
+      })
+      .strict()
+      .noUnknown(),
+  });
+
   addNote = (body: IEditNoteObj) => {
     try {
       this.addNoteSchema.validateSync({
@@ -35,7 +45,7 @@ class NotesServices implements INotesServices {
 
   editNote = (body: IEditNoteObj, id: string) => {
     try {
-      this.addNoteSchema.validateSync({ body: body });
+      this.editNoteSchema.validateSync({ body: body });
       this.repository.editNote(id, body);
     } catch (err: any) {
       throw err;
