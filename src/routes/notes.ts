@@ -9,18 +9,31 @@ router
   .post((req: Request, res: Response) => {
     try {
       notesServices.addNote(req.body);
-      res.send(`Note added`);
+      res.status(201).send({
+        message: "Note added",
+        note: notesServices.getAllNotes()[
+          notesServices.getAllNotes().length - 1
+        ],
+      });
     } catch (err: any) {
-      res.status(500).json({ name: err.name, message: err.message });
+      res.status(500).json({ error: "Input data isn't correct" });
     }
   })
-  .get((req: Request, res: Response) => res.json(notesServices.getAllNotes()));
+  .get((req: Request, res: Response) => {
+    try {
+      res.json(notesServices.getAllNotes());
+    } catch (err) {
+      res.status(500).json({ error: "Something went wrong..." });
+    }
+  });
 
 router.route("/stats").get((req: Request, res: Response) => {
-  const stats = notesServices.getStats();
-  res.send(
-    `Statistic: there are ${stats.active} active & ${stats.archived} archived notes`
-  );
+  try {
+    const stats = notesServices.getStats();
+    res.json({ activeNotes: stats.active, archivedNotes: stats.archived });
+  } catch (err) {
+    res.status(500).json({ error: "Something went wrong..." });
+  }
 });
 
 router
@@ -29,9 +42,9 @@ router
     try {
       const id = req.params.id;
       notesServices.deleteNote(id);
-      res.send(`Note id: ${id} deleted,`);
+      res.json({ message: `Note id: ${id} deleted,` });
     } catch (err: any) {
-      res.status(500).json({ name: err.name, message: err.message });
+      res.status(500).json({ error: "Input data isn't correct" });
     }
   })
 
@@ -39,9 +52,12 @@ router
     const id = req.params.id;
     try {
       notesServices.editNote(req.body, id);
-      res.send(`Note with id: ${id} was edited`);
+      res.json({
+        message: `Note with id: ${id} was edited`,
+        note: notesServices.getNote(id),
+      });
     } catch (err: any) {
-      res.status(500).json({ name: err.name, message: err.message });
+      res.status(500).json({ error: "Input data isn't correct" });
     }
   })
 
@@ -49,7 +65,7 @@ router
     try {
       res.json(notesServices.getNote(req.params.id));
     } catch (err: any) {
-      res.status(500).json({ name: err.name, message: err.message });
+      res.status(500).json({ error: "Input data isn't correct" });
     }
   });
 

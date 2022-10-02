@@ -1,64 +1,66 @@
 import { INoteObj, INotesRepository, ISummary, IEditNoteObj } from "./types";
 
+const initialState = [
+  {
+    category: "random thought",
+    created: "september 22, 2022",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    id: "0",
+    active: true,
+  },
+  {
+    category: "random thought",
+    created: "september 22, 2022",
+    content:
+      "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    id: "1",
+    active: true,
+  },
+  {
+    category: "idea",
+    created: "september 22, 2022",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    id: "2",
+    active: true,
+  },
+  {
+    category: "random thought",
+    created: "september 22, 2022",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+    id: "3",
+    active: true,
+  },
+  {
+    category: "task",
+    created: "september 22, 2022",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit 5/1/2022 , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+    id: "4",
+    active: true,
+  },
+  {
+    category: "random thought",
+    created: "september 22, 2022",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
+    id: "5",
+    active: true,
+  },
+  {
+    category: "idea",
+    created: "september 22, 2022",
+    content:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit 5/1/2022 5/1/2022",
+    id: "6",
+    active: true,
+  },
+];
+
 class NotesRepository implements INotesRepository {
   notes: INoteObj[];
-  constructor() {
-    this.notes = [
-      {
-        category: "random thought",
-        created: "september 22, 2022",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        id: "0",
-        active: true,
-      },
-      {
-        category: "random thought",
-        created: "september 22, 2022",
-        content:
-          "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        id: "1",
-        active: true,
-      },
-      {
-        category: "idea",
-        created: "september 22, 2022",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        id: "2",
-        active: true,
-      },
-      {
-        category: "random thought",
-        created: "september 22, 2022",
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
-        id: "3",
-        active: true,
-      },
-      {
-        category: "task",
-        created: "september 22, 2022",
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit 5/1/2022 , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
-        id: "4",
-        active: true,
-      },
-      {
-        category: "random thought",
-        created: "september 22, 2022",
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ",
-        id: "5",
-        active: true,
-      },
-      {
-        category: "idea",
-        created: "september 22, 2022",
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit 5/1/2022 5/1/2022",
-        id: "6",
-        active: true,
-      },
-    ];
+  constructor(notes: INoteObj[]) {
+    this.notes = notes;
   }
 
   addNote(category: string, content: string) {
@@ -142,6 +144,6 @@ class NotesRepository implements INotesRepository {
   }
 }
 
-const notesRepository = new NotesRepository();
+const notesRepository = new NotesRepository(initialState);
 
 export default notesRepository;
