@@ -1,6 +1,6 @@
 # Note app (endpoint)
 
-Simple Express-based application
+Simple Express-based application with Yup object schema validation
 
 ## Installing
 
